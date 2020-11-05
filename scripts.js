@@ -8,7 +8,7 @@ var svg = d3.selectAll(".container")
     .attr("height", height)
     .attr("viewBox", [0,0,width,height]) 
 
-var sizeScale = d3.scaleSqrt()
+var sizeScale = d3.scaleLinear()
     .range([0,10])
 
 var colors = d3.scaleOrdinal(d3.schemeCategory10)
@@ -51,7 +51,7 @@ Promise.all([ // load multiple files
         let worldmap = data[1]; // data2.json
         
         var worldmapgeojson = topojson.feature(worldmap, worldmap.objects.countries);
-        var projection = d3.geoEqualEarth().fitExtent([[0,0], [width,height]], worldmapgeojson);
+        var projection = d3.geoNaturalEarth1().fitExtent([[0,0], [width,height]], worldmapgeojson);
         var path = d3.geoPath()
              .projection(projection);
         
@@ -132,7 +132,7 @@ Promise.all([ // load multiple files
                     // restart the simulation
                     force.alpha(1).restart()
                     // set the map opacity to 0
-                    map.transition(1000).style("opacity", 0)
+                    map.transition(2000).style("opacity", 0)
                     mapOutline.transition(1000).style("opacity", 0)
 
                 }
